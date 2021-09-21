@@ -7,6 +7,8 @@ public class Patient
    private final int FIRSTNAME = 2;
    private final int CALLNAME  = 3;
 
+   private String woonplaats;
+
    private String surName;
    private String firstName;
    private String callName;
