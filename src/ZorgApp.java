@@ -2,7 +2,8 @@ public class ZorgApp
 {
     public static void main(String[] args)
     {
-        Admin admin = new Admin();
+        int userID = 0;
+        Admin admin = new Admin( userID );
         admin.menu();
     }
 }
