@@ -22,6 +22,11 @@ public class Patient
       this.callName = firstName; // rest via separate method if needed.
    }
 
+   public String getWoonplaats()
+   {
+      return woonplaats;
+   }
+   s
    // Access surName
    public String getSurName()
    {
