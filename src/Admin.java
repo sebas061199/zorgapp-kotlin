@@ -4,12 +4,14 @@ public class Admin
 {
    Patient patient;
    int     userID;
+   boolean zv;
 
    // Constructor
    Admin( int userID )
    {
       this.userID = userID;
       patient     = new Patient( "Van Puffelen", "Adriaan" );
+      zv          = (userID == 0);
    }
 
    // Main menu
@@ -41,7 +43,7 @@ public class Admin
                break;
 
             case EDIT:
-               patient.editMenu( true );
+               patient.editMenu( zv );
                break;
 
             default:
