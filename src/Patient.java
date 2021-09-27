@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 public class Patient
 {
-   private final int RETURN    = 0;
-   private final int SURNAME   = 1;
-   private final int FIRSTNAME = 2;
-   private final int NICKNAME  = 3;
+   private final int RETURN      = 0;
+   private final int SURNAME     = 1;
+   private final int FIRSTNAME   = 2;
+   private final int NICKNAME    = 3;
+   private final int DATEOFBIRTH = 4;
 
    private String    surName;
    private String    firstName;
@@ -87,6 +88,12 @@ public class Patient
                nickName = scanner2.nextLine();
                break;
 
+            case DATEOFBIRTH:
+               System.out.println( "Enter new date of birth (yyyy-MM-dd):" );
+               String sdate = scanner2.nextLine();
+               dateOfBirth = LocalDate.parse( sdate );
+               break;
+
             default:
                System.out.println( "Invalid entry: " + choice );
                break;
@@ -99,10 +106,15 @@ public class Patient
    {
       if (zv)
       {
-         System.out.println( SURNAME + " - Surname:    " + surName );
-         System.out.println( FIRSTNAME + " - First name: " + firstName );
+         System.out.println( SURNAME + " - Surname:       " + surName );
+         System.out.println( FIRSTNAME + " - First name:    " + firstName );
       }
-      System.out.println( NICKNAME + " - Nickname:   " + nickName );
+      System.out.println( NICKNAME + " - Nickname:      " + nickName );
+
+      if (zv)
+      {
+         System.out.println( DATEOFBIRTH + " - Date of Birth: " + dateOfBirth );
+      }
    }
 
    // Write patient data to screen.
@@ -113,7 +125,7 @@ public class Patient
       System.out.println( "First name:    " + firstName );
       System.out.println( "Nickname:      " + nickName );
       Period age = dateOfBirth.until( LocalDate.now() );
-      System.out.println( "Date of birth: " + dateOfBirth + " (age " + age.getYears() + ")");
+      System.out.println( "Date of birth: " + dateOfBirth + " (age " + age.getYears() + ")" );
       System.out.println( "===================================" );
    }
 }
