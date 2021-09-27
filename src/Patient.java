@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Scanner;
 
 public class Patient
@@ -7,17 +9,20 @@ public class Patient
    private final int FIRSTNAME = 2;
    private final int NICKNAME  = 3;
 
-   private String surName;
-   private String firstName;
-   private String nickName;
-   private String woonplaats;
+   private String    surName;
+   private String    firstName;
+   private String    nickName;
+   private String    woonplaats;
+   private LocalDate dateOfBirth;
 
    // Constructor
-   Patient( String surName, String firstName )
+   Patient( String surName, String firstName, LocalDate dateOfBirth )
    {
       this.surName   = surName;
       this.firstName = firstName;
       this.nickName  = firstName; // rest via separate method if needed.
+
+      this.dateOfBirth = dateOfBirth;
    }
 
    public String getWoonplaats()
@@ -103,10 +108,12 @@ public class Patient
    // Write patient data to screen.
    void write()
    {
-      System.out.println( "===================================");
-      System.out.println( "Surname:    " + surName );
-      System.out.println( "First name: " + firstName );
-      System.out.println( "Nickname:   " + nickName );
-      System.out.println( "===================================");
+      System.out.println( "===================================" );
+      System.out.println( "Surname:       " + surName );
+      System.out.println( "First name:    " + firstName );
+      System.out.println( "Nickname:      " + nickName );
+      Period age = dateOfBirth.until( LocalDate.now() );
+      System.out.println( "Date of birth: " + dateOfBirth + " (age " + age.getYears() + ")");
+      System.out.println( "===================================" );
    }
 }

@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Admin
@@ -10,7 +11,7 @@ public class Admin
    Admin( int userID )
    {
       this.userID = userID;
-      patient     = new Patient( "Van Puffelen", "Adriaan" );
+      patient     = new Patient( "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) );
       zv          = (userID == 0);
    }
 
