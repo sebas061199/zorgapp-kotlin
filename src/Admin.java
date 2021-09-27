@@ -24,7 +24,7 @@ public class Admin
       int choice = 1;
       while (choice != 0)
       {
-         System.out.println( "Enter digit: " );
+         System.out.println( "Admin menu: enter digit:" );
          System.out.println( STOP + ":  STOP" );
          System.out.println( PRINT + ":  Print patient data" );
          System.out.println( EDIT + ":  Edit  patient data" );
@@ -37,12 +37,10 @@ public class Admin
                break;
 
             case PRINT:
-               System.out.println( "Print data..." );
                patient.write();
                break;
 
             case EDIT:
-               System.out.println( "Edit data..." );
                patient.editMenu( true );
                break;
 

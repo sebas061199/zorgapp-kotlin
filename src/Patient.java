@@ -5,28 +5,26 @@ public class Patient
    private final int RETURN    = 0;
    private final int SURNAME   = 1;
    private final int FIRSTNAME = 2;
-   private final int CALLNAME  = 3;
-
-   private String woonplaats;
+   private final int NICKNAME  = 3;
 
    private String surName;
    private String firstName;
-   private String callName;
+   private String nickName;
+   private String woonplaats;
 
    // Constructor
    Patient( String surName, String firstName )
    {
       this.surName   = surName;
       this.firstName = firstName;
-
-      this.callName = firstName; // rest via separate method if needed.
+      this.nickName  = firstName; // rest via separate method if needed.
    }
 
    public String getWoonplaats()
    {
       return woonplaats;
    }
-   s
+
    // Access surName
    public String getSurName()
    {
@@ -40,9 +38,9 @@ public class Patient
    }
 
    // Access callName
-   public String getCallName()
+   public String getNickName()
    {
-      return callName;
+      return nickName;
    }
 
    void editMenu( boolean zv )
@@ -53,8 +51,8 @@ public class Patient
       int choice = -1;
       while (choice != 0)
       {
+         System.out.println( "Patient edit menu: enter digit (0=return)" );
          write();
-         System.out.println( "Enter digit (0=return)" );
          choice = scanner1.nextInt();
          switch (choice)
          {
@@ -71,19 +69,19 @@ public class Patient
                firstName = scanner2.nextLine();
                break;
 
-            case CALLNAME:
-               System.out.println( "Enter new call name:" );
-               callName = scanner2.nextLine();
+            case NICKNAME:
+               System.out.println( "Enter new nickname:" );
+               nickName = scanner2.nextLine();
                break;
          }
       }
    }
 
-   // Write data to screen.
+   // Write patient data to screen.
    void write()
    {
-      System.out.println( SURNAME + " - Surname:    " + surName );
+      System.out.println( SURNAME +   " - Surname:    " + surName );
       System.out.println( FIRSTNAME + " - First name: " + firstName );
-      System.out.println( CALLNAME + " - Call name:  " + callName );
+      System.out.println( NICKNAME + " - Nickname:   " + nickName );
    }
 }
