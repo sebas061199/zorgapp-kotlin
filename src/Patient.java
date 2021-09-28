@@ -16,7 +16,7 @@ public class Patient
    private String    surName;
    private String    firstName;
    private String    nickName;
-   private String    woonplaats;
+
    private LocalDate dateOfBirth;
 
    private double length = -1.0;
