@@ -57,11 +57,6 @@ public class Patient
       return weight/(length*length);
    }
 
-   public String getWoonplaats()
-   {
-      return woonplaats;
-   }
-
    // Access surName
    public String getSurName()
    {
