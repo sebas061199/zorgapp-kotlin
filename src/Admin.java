@@ -4,15 +4,15 @@ import java.util.Scanner;
 public class Admin
 {
    Patient patient;
-   int     userID;
+   int     userID = -1;
    boolean zv;
 
    // Constructor
    Admin( int userID )
    {
       this.userID = userID;
-      patient     = new Patient( "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) );
       zv          = (userID == 0);
+      patient     = new Patient( "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) );
    }
 
    // Main menu

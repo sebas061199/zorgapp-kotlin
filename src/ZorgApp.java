@@ -19,7 +19,7 @@ public class ZorgApp
 
       if (userID < 0)
       {
-         System.err.println( "usage: zorgapp <patientnr>");
+         System.err.println( "usage: zorgapp <patientnr>" );
          exit( -1 );
       }
 

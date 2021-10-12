@@ -13,9 +13,9 @@ public class Patient
    private final int WEIGHT      = 5;
    private final int LENGTH      = 6;
 
-   private String    surName;
-   private String    firstName;
-   private String    nickName;
+   private String surName;
+   private String firstName;
+   private String nickName;
 
    private LocalDate dateOfBirth;
 
@@ -100,16 +100,16 @@ public class Patient
                {
                   System.out.println( "Enter new surname:" );
                   surName = scanner2.nextLine();
+                  break;
                }
-               break;
 
             case FIRSTNAME:
                if (zv)
                {
                   System.out.println( "Enter new first name:" );
                   firstName = scanner2.nextLine();
+                  break;
                }
-               break;
 
             case NICKNAME:
                System.out.println( "Enter new nickname:" );
@@ -117,22 +117,31 @@ public class Patient
                break;
 
             case DATEOFBIRTH:
-               System.out.println( "Enter new date of birth (yyyy-MM-dd):" );
-               String sdate = scanner2.nextLine();
-               dateOfBirth = LocalDate.parse( sdate );
-               break;
+               if (zv)
+               {
+                  System.out.println( "Enter new date of birth (yyyy-MM-dd):" );
+                  String sdate = scanner2.nextLine();
+                  dateOfBirth = LocalDate.parse( sdate );
+                  break;
+               }
 
             case LENGTH:
-               System.out.println( "Enter new length (in m)" );
-               double l = scanner1.nextDouble();
-               setLength( l );
-               break;
+               if (zv)
+               {
+                  System.out.println( "Enter new length (in m)" );
+                  double l = scanner1.nextDouble();
+                  setLength( l );
+                  break;
+               }
 
             case WEIGHT:
-               System.out.println( "Enter new weight (in kg)" );
-               double m = scanner1.nextDouble();
-               setWeight( m );
-               break;
+               if (zv)
+               {
+                  System.out.println( "Enter new weight (in kg)" );
+                  double m = scanner1.nextDouble();
+                  setWeight( m );
+                  break;
+               }
 
             default:
                System.out.println( "Invalid entry: " + choice );
