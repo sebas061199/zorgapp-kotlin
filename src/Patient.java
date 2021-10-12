@@ -21,15 +21,23 @@ public class Patient
 
    private double length = -1.0;
    private double weight = 0.0;
+   private int    id     = -1;
 
    // Constructor
-   Patient( String surName, String firstName, LocalDate dateOfBirth )
+   Patient( int id, String surName, String firstName, LocalDate dateOfBirth )
    {
-      this.surName   = surName;
-      this.firstName = firstName;
-      this.nickName  = firstName; // rest via separate method if needed.
-
+      this.id          = id;
+      this.surName     = surName;
+      this.firstName   = firstName;
+      this.nickName    = firstName; // rest via separate method if needed.
       this.dateOfBirth = dateOfBirth;
+   }
+
+   Patient( int id, String surName, String firstName, LocalDate dateOfBirth, double weight, double length )
+   {
+      this( id, surName, firstName, dateOfBirth );
+      this.weight = weight;
+      this.length = length;
    }
 
    public double getLength()
@@ -181,5 +189,11 @@ public class Patient
       System.out.format( "%-17s %.2f\n", "Weight:", weight );
       System.out.format( "%-17s %.1f\n", "Body Mass Index:", calcBMI() );
       System.out.println( "===================================" );
+   }
+
+   // Write oneline info of patient to screen
+   void writeOneliner()
+   {
+      System.out.format( "%10s %-20s [%s]\n", firstName, surName, dateOfBirth.toString() );
    }
 }
