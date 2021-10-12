@@ -6,6 +6,8 @@ public class ZorgApp
 {
    public static void main( String[] args )
    {
+      System.out.println( "ZorgApp2021-" + "sprint1" );
+
       if (args.length != 1)
       {
          System.out.println( "usage: ZorgApp <patientnr>" );
