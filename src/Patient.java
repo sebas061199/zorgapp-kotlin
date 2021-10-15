@@ -12,6 +12,7 @@ public class Patient
    private final int DATEOFBIRTH = 4;
    private final int LENGTH      = 5;
    private final int WEIGHT      = 6;
+   private final int MEDICATION  = 7;
 
    private String surName;
    private String firstName;
@@ -35,6 +36,8 @@ public class Patient
       this.dateOfBirth = dateOfBirth;
    }
 
+   ////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////
    Patient( int id, String surName, String firstName, LocalDate dateOfBirth, double weight, double length )
    {
       this( id, surName, firstName, dateOfBirth );
@@ -108,8 +111,9 @@ public class Patient
       boolean nextCycle = true;
       while (nextCycle)
       {
-         System.out.println( "Patient data edit menu: enter digit (0=return)" );
+         System.out.println( "Patient data edit menu:" );
          printEditMenuOptions( zv );
+         System.out.println( "Enter digit (0=return)" );
 
          int choice = scanner1.nextInt();
          switch (choice)
@@ -166,6 +170,13 @@ public class Patient
                   break;
                }
 
+            case MEDICATION:
+               if (zv)
+               {
+                  medicins.editMenu();
+                  break;
+               }
+
             default:
                System.out.println( "Invalid entry: " + choice );
                break;
@@ -189,6 +200,7 @@ public class Patient
          System.out.format( "%d: %-17s %s (age %d)\n", DATEOFBIRTH, "Date of birth:", dateOfBirth, age.getYears() );
          System.out.format( "%d: %-17s %.2f\n", LENGTH, "Length:", length );
          System.out.format( "%d: %-17s %.2f (bmi=%.1f)\n", WEIGHT, "Weight:", weight, calcBMI() );
+         System.out.format( "%d: %-17s %d medicins\n", MEDICATION, "Medication", medicins.size() );
       }
    }
 
@@ -203,8 +215,8 @@ public class Patient
       System.out.format( "%-17s %s (age %d)\n", "Date of birth:", dateOfBirth, age.getYears() );
       System.out.format( "%-17s %.2f\n", "Length:", length );
       System.out.format( "%-17s %.2f (bmi=%.1f)\n", "Weight:", weight, calcBMI() );
-      System.out.format( "%-17s %d\n", "Medicins:", medicins.size() );
-      medicins.writeln();
+      System.out.format( "%-17s %d medicins\n", "Medication:", medicins.size() );
+      medicins.writeShort();
       System.out.println( "===================================" );
    }
 

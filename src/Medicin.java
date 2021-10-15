@@ -50,6 +50,11 @@ class Medicin
       return desc;
    }
 
+   public void setDose( String dose )
+   {
+      this.dose = dose;
+   }
+
    public String kind()
    {
       return type;

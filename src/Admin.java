@@ -16,11 +16,11 @@ public class Admin
       // Create patient profiles
       {
          var p = new Patient( patients.freeId(), "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) );
-         p.addMedicin( medicins.getMedicin(1) );
-         p.addMedicin( medicins.getMedicin(3) );
-         p.addMedicin( medicins.getMedicin(5) );
-         p.addMedicin( medicins.getMedicin(7) );
-         p.addMedicin( medicins.getMedicin(9) );
+         p.addMedicin( medicins.getMedicin( 1 ) );
+         p.addMedicin( medicins.getMedicin( 3 ) );
+         p.addMedicin( medicins.getMedicin( 5 ) );
+         p.addMedicin( medicins.getMedicin( 7 ) );
+         p.addMedicin( medicins.getMedicin( 9 ) );
          patients.addPatient( p );
       }
       patients.addPatient( new Patient( patients.freeId(), "Bruggen", "Karin", LocalDate.of( 1970, 1, 1 ), 64.2, 1.68 ) );
@@ -72,7 +72,7 @@ public class Admin
             System.out.format( "Current patient: " );
             patient.writeOneliner();
          }
-         System.out.println( "enter digit:" );
+
          System.out.format( "%d:  STOP\n", STOP );
          if (zv)
          {
@@ -81,6 +81,7 @@ public class Admin
          System.out.format( "%d:  Print patient data\n", PRINT );
          System.out.format( "%d:  Edit  patient data\n", EDIT );
 
+         System.out.println( "enter digit:" );
          choice = scanner.nextInt();
          switch (choice)
          {
