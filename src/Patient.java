@@ -10,8 +10,8 @@ public class Patient
    private final int FIRSTNAME   = 2;
    private final int NICKNAME    = 3;
    private final int DATEOFBIRTH = 4;
-   private final int WEIGHT      = 5;
-   private final int LENGTH      = 6;
+   private final int LENGTH      = 5;
+   private final int WEIGHT      = 6;
 
    private String surName;
    private String firstName;
@@ -21,15 +21,23 @@ public class Patient
 
    private double length = -1.0;
    private double weight = 0.0;
+   private int    id     = -1;
 
    // Constructor
-   Patient( String surName, String firstName, LocalDate dateOfBirth )
+   Patient( int id, String surName, String firstName, LocalDate dateOfBirth )
    {
-      this.surName   = surName;
-      this.firstName = firstName;
-      this.nickName  = firstName; // rest via separate method if needed.
-
+      this.id          = id;
+      this.surName     = surName;
+      this.firstName   = firstName;
+      this.nickName    = firstName; // rest via separate method if needed.
       this.dateOfBirth = dateOfBirth;
+   }
+
+   Patient( int id, String surName, String firstName, LocalDate dateOfBirth, double weight, double length )
+   {
+      this( id, surName, firstName, dateOfBirth );
+      this.weight = weight;
+      this.length = length;
    }
 
    public double getLength()
@@ -75,6 +83,7 @@ public class Patient
       return nickName;
    }
 
+   // Handle editing of patient data
    void editMenu( boolean zv )
    {
       Scanner scanner1 = new Scanner( System.in ); // use for integers.
@@ -98,7 +107,7 @@ public class Patient
             case SURNAME:
                if (zv)
                {
-                  System.out.println( "Enter new surname:" );
+                  System.out.format( "Enter new surname: (was: %s)\n", surName );
                   surName = scanner2.nextLine();
                   break;
                }
@@ -106,20 +115,20 @@ public class Patient
             case FIRSTNAME:
                if (zv)
                {
-                  System.out.println( "Enter new first name:" );
+                  System.out.format( "Enter new first name: (was: %s)\n", firstName );
                   firstName = scanner2.nextLine();
                   break;
                }
 
             case NICKNAME:
-               System.out.println( "Enter new nickname:" );
+               System.out.format( "Enter new nickname: (was: %s)\n", nickName );
                nickName = scanner2.nextLine();
                break;
 
             case DATEOFBIRTH:
                if (zv)
                {
-                  System.out.println( "Enter new date of birth (yyyy-MM-dd):" );
+                  System.out.format( "Enter new date of birth (yyyy-MM-dd; was: %s)\n", dateOfBirth );
                   String sdate = scanner2.nextLine();
                   dateOfBirth = LocalDate.parse( sdate );
                   break;
@@ -128,7 +137,7 @@ public class Patient
             case LENGTH:
                if (zv)
                {
-                  System.out.println( "Enter new length (in m)" );
+                  System.out.format( "Enter new length (in m; was: %.2f)", length );
                   double l = scanner1.nextDouble();
                   setLength( l );
                   break;
@@ -137,7 +146,7 @@ public class Patient
             case WEIGHT:
                if (zv)
                {
-                  System.out.println( "Enter new weight (in kg)" );
+                  System.out.format( "Enter new weight (in kg; was: %.1f)\n", weight );
                   double m = scanner1.nextDouble();
                   setWeight( m );
                   break;
@@ -155,31 +164,38 @@ public class Patient
    {
       if (zv)
       {
-         System.out.println( SURNAME + " - Surname:       " + surName );
-         System.out.println( FIRSTNAME + " - First name:    " + firstName );
+         System.out.format( "%d: %-17s %s\n", SURNAME, "Surname:", surName );
+         System.out.format( "%d: %-17s %s\n", FIRSTNAME, "firstName:", firstName );
       }
-      System.out.println( NICKNAME + " - Nickname:      " + nickName );
+      System.out.format( "%d: %-17s %s\n", NICKNAME, "Nickname:", nickName );
 
       if (zv)
       {
-         System.out.println( DATEOFBIRTH + " - Date of Birth: " + dateOfBirth );
-         System.out.println( LENGTH + " - Length: " + length + " (m)" );
-         System.out.println( WEIGHT + " - Weight: " + weight + " (kg)" );
+         Period age = dateOfBirth.until( LocalDate.now() );
+         System.out.format( "%d: %-17s %s (age %d)\n", DATEOFBIRTH, "Date of birth:", dateOfBirth, age.getYears() );
+         System.out.format( "%d: %-17s %.2f\n", LENGTH, "Length:", length );
+         System.out.format( "%d: %-17s %.2f (bmi=%.1f)\n", WEIGHT, "Weight:", weight, calcBMI() );
       }
    }
 
-   // Write patient data to screen.
+   // Write patient data to screen.  TODO: Combine with printEditMenuOptions
    void write()
    {
       System.out.println( "===================================" );
-      System.out.println( "Surname:        " + surName );
-      System.out.println( "First name:     " + firstName );
-      System.out.println( "Nickname:       " + nickName );
+      System.out.format( "%-17s %s\n", "Surname:", surName );
+      System.out.format( "%-17s %s\n", "firstName:", firstName );
+      System.out.format( "%-17s %s\n", "Nickname:", nickName );
       Period age = dateOfBirth.until( LocalDate.now() );
-      System.out.println( "Date of birth:  " + dateOfBirth + " (age " + age.getYears() + ")" );
+      System.out.format( "%-17s %s (age %d)\n", "Date of birth:", dateOfBirth, age.getYears() );
       System.out.format( "%-17s %.2f\n", "Length:", length );
-      System.out.format( "%-17s %.2f\n", "Weight:", weight );
+      System.out.format( "%-17s %.2f (bmi=%.1f)\n", "Weight:", weight, calcBMI() );
       System.out.format( "%-17s %.1f\n", "Body Mass Index:", calcBMI() );
       System.out.println( "===================================" );
+   }
+
+   // Write oneline info of patient to screen
+   void writeOneliner()
+   {
+      System.out.format( "%10s %-20s [%s]\n", firstName, surName, dateOfBirth.toString() );
    }
 }
