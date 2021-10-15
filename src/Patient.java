@@ -23,6 +23,8 @@ public class Patient
    private double weight = 0.0;
    private int    id     = -1;
 
+   private Medicins medicins = new Medicins( false );  // Start with an empty medicin list.
+
    // Constructor
    Patient( int id, String surName, String firstName, LocalDate dateOfBirth )
    {
@@ -81,6 +83,18 @@ public class Patient
    public String getNickName()
    {
       return nickName;
+   }
+
+   // Add a new medicin to the patients medication
+   public void addMedicin( Medicin medicin )
+   {
+      medicins.addMedicin( new Medicin( medicin ) );
+   }
+
+   // Add a new medicin to the patients medication (new dose)
+   public void addMedicin( Medicin medicin, String mydose )
+   {
+      medicins.addMedicin( new Medicin( medicin, mydose ) );
    }
 
    // Handle editing of patient data
@@ -189,7 +203,8 @@ public class Patient
       System.out.format( "%-17s %s (age %d)\n", "Date of birth:", dateOfBirth, age.getYears() );
       System.out.format( "%-17s %.2f\n", "Length:", length );
       System.out.format( "%-17s %.2f (bmi=%.1f)\n", "Weight:", weight, calcBMI() );
-      System.out.format( "%-17s %.1f\n", "Body Mass Index:", calcBMI() );
+      System.out.format( "%-17s %d\n", "Medicins:", medicins.size() );
+      medicins.writeln();
       System.out.println( "===================================" );
    }
 

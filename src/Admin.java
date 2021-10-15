@@ -5,6 +5,7 @@ public class Admin
 {
    Patients patients = new Patients(); // The list of all patients
    Patient  patient;                   // The currently selected patient
+   Medicins medicins = new Medicins( true );
    boolean  zv;                        // true when 'zorgverlener'; false otherwise
 
    // Constructor
@@ -13,12 +14,27 @@ public class Admin
       zv = (userID == 0);
 
       // Create patient profiles
-      patients.addPatient( new Patient( patients.freeId(), "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) ) );
+      {
+         var p = new Patient( patients.freeId(), "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) );
+         p.addMedicin( medicins.getMedicin(1) );
+         p.addMedicin( medicins.getMedicin(3) );
+         p.addMedicin( medicins.getMedicin(5) );
+         p.addMedicin( medicins.getMedicin(7) );
+         p.addMedicin( medicins.getMedicin(9) );
+         patients.addPatient( p );
+      }
       patients.addPatient( new Patient( patients.freeId(), "Bruggen", "Karin", LocalDate.of( 1970, 1, 1 ), 64.2, 1.68 ) );
       patients.addPatient( new Patient( patients.freeId(), "Klinkhamer", "Hielke", LocalDate.of( 1980, 12, 31 ), 74.2, 1.77 ) );
       patients.addPatient( new Patient( patients.freeId(), "Klinkhamer", "Sietse", LocalDate.of( 1980, 12, 31 ), 74.5, 1.78 ) );
       patients.addPatient( new Patient( patients.freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 68.2, 1.65 ) );
-      patients.addPatient( new Patient( patients.freeId(), "de Lange", "Kortjakje", LocalDate.of( 2012, 7, 1 ), 68.2, 1.65 ) );
+
+      {
+         var p = new Patient( patients.freeId(), "de Lange", "Kortjakje", LocalDate.of( 2012, 7, 1 ), 68.2, 1.65 );
+         p.addMedicin( medicins.getMedicin( 2 ), "onbekend" );
+         p.addMedicin( medicins.getMedicin( 3 ), "1/dag" );
+         patients.addPatient( p );
+      }
+
       patients.addPatient( new Patient( patients.freeId(), "Stroorum", "Karin", LocalDate.of( 2012, 12, 12 ), 44.2, 1.50 ) );
       patients.addPatient( new Patient( patients.freeId(), "Pie", "Willem", LocalDate.of( 1956, 11, 21 ), 80.0, 1.86 ) );
       patients.addPatient( new Patient( patients.freeId(), "Bakkebaard", "Opa", LocalDate.of( 1900, 01, 01 ), 44.2, 1.50 ) );
