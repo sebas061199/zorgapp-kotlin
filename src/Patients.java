@@ -42,9 +42,11 @@ public class Patients
       p.addWeightMeasurement( 73.3, LocalDate.of( 2000, Month.NOVEMBER, 27 ) );
       patients.add( p );
 
-      patients.add( new Patient( freeId(), "Bruggen", "Karin", LocalDate.of( 1970, 1, 1 ), 64.2, 1.68 ) );
+      p = new Patient( freeId(), "Bruggen", "Karin", LocalDate.of( 1970, 1, 1 ), 1.68 );
+      p.addWeightMeasurement( 64.2, LocalDate.now() );
+      patients.add( p );
 
-      p = new Patient( freeId(), "Klinkhamer", "Hielke", LocalDate.of( 1980, 12, 31 ), 74.2, 1.77 );
+      p = new Patient( freeId(), "Klinkhamer", "Hielke", LocalDate.of( 1980, 12, 31 ), 1.77 );
       p.addWeightMeasurement( 60.0, LocalDate.of( 2004, Month.FEBRUARY, 29 ) );
       p.addWeightMeasurement( 61.0, LocalDate.of( 2005, Month.FEBRUARY, 28 ) );
       p.addWeightMeasurement( 62.0, LocalDate.of( 2006, Month.FEBRUARY, 28 ) );
@@ -58,16 +60,19 @@ public class Patients
       p.addWeightMeasurement( 64.0, LocalDate.of( 2013, Month.FEBRUARY, 28 ) );
       patients.add( p );
 
-      p = new Patient( freeId(), "Klinkhamer", "Sietse", LocalDate.of( 1980, 12, 31 ), 74.5, 1.78 );
+      p = new Patient( freeId(), "Klinkhamer", "Sietse", LocalDate.of( 1980, 12, 31 ), 1.78 );
+      p.addWeightMeasurement( 63.0, LocalDate.now() );
       p.addMedicin( medicins.getMedicin( 2 ) );  // TODO: no hardcoded encoding of medicins:
       p.addMedicin( medicins.getMedicin( 4 ) );
       p.addMedicin( medicins.getMedicin( 6 ) );
       p.addMedicin( medicins.getMedicin( 8 ) );
       patients.add( p );
 
-      patients.add( new Patient( freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 68.2, 1.65 ) );
+      p =new Patient( freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 1.65 );
+      p.addWeightMeasurement( 68.2, LocalDate.now() );
+      patients.add( p );
 
-      p = new Patient( freeId(), "de Lange", "Kortjakje", LocalDate.of( 2012, 7, 1 ), 68.2, 1.65 );
+      p = new Patient( freeId(), "de Lange", "Kortjakje", LocalDate.of( 2012, 7, 1 ), 1.65 );
       p.addMedicin( medicins.getMedicin( 2 ), "onbekend" );
       p.addMedicin( medicins.getMedicin( 3 ), "1/dag" );
       p.addWeightMeasurement( 45.0, LocalDate.of( 2000, Month.APRIL, 1 ) );
@@ -78,11 +83,20 @@ public class Patients
       p.addWeightMeasurement( 46.3, LocalDate.of( 2000, Month.JUNE, 27 ) );
       p.addWeightMeasurement( 45.3, LocalDate.of( 2000, Month.AUGUST, 27 ) );
       p.addWeightMeasurement( 53.3, LocalDate.of( 2001, Month.JANUARY, 27 ) );
+      p.addWeightMeasurement( 68.2, LocalDate.now() );
       patients.add( p );
 
-      patients.add( new Patient( freeId(), "Stroorum", "Karin", LocalDate.of( 2012, 12, 12 ), 44.2, 1.50 ) );
-      patients.add( new Patient( freeId(), "Pie", "Willem", LocalDate.of( 1956, 11, 21 ), 80.0, 1.86 ) );
-      patients.add( new Patient( freeId(), "Bakkebaard", "Opa", LocalDate.of( 1900, 01, 01 ), 44.2, 1.50 ) );
+      p=new Patient( freeId(), "Stroorum", "Karin", LocalDate.of( 2012, 12, 12 ), 1.50 );
+      p.addWeightMeasurement( 44.2, LocalDate.now() );
+      patients.add( p );
+
+      p=new Patient( freeId(), "Pie", "Willem", LocalDate.of( 1956, 11, 21 ), 1.86);
+      p.addWeightMeasurement( 80.0, LocalDate.now() );
+      patients.add( p );
+
+      p = new Patient( freeId(), "Bakkebaard", "Opa", LocalDate.of( 1900, 01, 01 ), 1.50 );
+      p.addWeightMeasurement( 44.2, LocalDate.now() );
+      patients.add( p );
    }
 
    ////////////////////////////////////////////////////////////////////////////////
