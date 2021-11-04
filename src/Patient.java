@@ -22,10 +22,10 @@ public class Patient
    private LocalDate dateOfBirth;
 
    private double length = -1.0;
-   private double weight = 0.0;
    private int    id     = -1;
 
-   private Medicins medicins = new Medicins( false );  // Start with an empty medicin list.
+   private Medicins           medicins = new Medicins( false );  // Start with an empty medicin list.
+   private WeightMeasurements weights  = new WeightMeasurements();
 
    // Constructor
    Patient( int id, String surName, String firstName, LocalDate dateOfBirth )
@@ -39,10 +39,9 @@ public class Patient
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
-   Patient( int id, String surName, String firstName, LocalDate dateOfBirth, double weight, double length )
+   Patient( int id, String surName, String firstName, LocalDate dateOfBirth, double length )
    {
       this( id, surName, firstName, dateOfBirth );
-      this.weight = weight;
       this.length = length;
    }
 
@@ -61,12 +60,15 @@ public class Patient
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
       dateOfBirth = LocalDate.parse( date, formatter );
 
-      weight = obj.getDouble( "weight" );
       length = obj.getDouble( "length" );
 
-      // The field _mymedicins is written as a JSONObject. (@see toJSON)
+      // The field medicins is written as a JSONObject. (@see toJSON)
       JSONObject obj2 = obj.getJSONObject( "medicins" );
       medicins = new Medicins( obj2 );
+
+      // The field weights is written as a JSONObject. (@see toJSON)
+      JSONObject obj3 = obj.getJSONObject( "weights" );
+      weights = new WeightMeasurements( obj3 );
    }
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -80,10 +82,10 @@ public class Patient
       obj.put( "firstName", firstName );
       obj.put( "surName", surName );
       obj.put( "dateOfBirth", dateOfBirth );
-      obj.put( "weight", weight );
       obj.put( "length", length );
 
       obj.put( "medicins", medicins.toJSON() );
+      obj.put( "weights", weights.toJSON() );
 
       return obj;
    }
@@ -100,17 +102,13 @@ public class Patient
 
    public double getWeight()
    {
-      return weight;
-   }
-
-   public void setWeight( double weight )
-   {
-      this.weight = weight;
+      var m = weights.mostRecent();
+      return (m != null) ? m.getWeight() : 0.0;
    }
 
    public double calcBMI()
    {
-      return length > 0.0 ? weight/(length*length) : -1.0;
+      return length > 0.0 ? getWeight()/(length*length) : -1.0;
    }
 
    // Access surName
@@ -141,6 +139,16 @@ public class Patient
    public void addMedicin( Medicin medicin, String mydose )
    {
       medicins.addMedicin( new Medicin( medicin, mydose ) );
+   }
+
+   public void addWeightMeasurement( double weight, LocalDate date )
+   {
+      weights.addMeasurement( date, weight );
+   }
+
+   public void plotWeights()
+   {
+      weights.plot();
    }
 
    // Handle editing of patient data
@@ -205,9 +213,9 @@ public class Patient
             case WEIGHT:
                if (zv)
                {
-                  System.out.format( "Enter new weight (in kg; was: %.1f)\n", weight );
+                  System.out.format( "Enter new weight (in kg; was: %.1f)\n", getWeight() );
                   double m = scanner1.scanDouble();
-                  setWeight( m );
+                  addWeightMeasurement( m, LocalDate.now() );
                   break;
                }
 
@@ -240,7 +248,7 @@ public class Patient
          Period age = dateOfBirth.until( LocalDate.now() );
          System.out.format( "%d: %-17s %s (age %d)\n", DATEOFBIRTH, "Date of birth:", dateOfBirth, age.getYears() );
          System.out.format( "%d: %-17s %.2f\n", LENGTH, "Length:", length );
-         System.out.format( "%d: %-17s %.2f (bmi=%.1f)\n", WEIGHT, "Weight:", weight, calcBMI() );
+         System.out.format( "%d: %-17s %.2f (bmi=%.1f)\n", WEIGHT, "Weight:", getWeight(), calcBMI() );
          System.out.format( "%d: %-17s %d medicins\n", MEDICATION, "Medication", medicins.size() );
       }
    }
@@ -255,7 +263,8 @@ public class Patient
       Period age = dateOfBirth.until( LocalDate.now() );
       System.out.format( "%-17s %s (age %d)\n", "Date of birth:", dateOfBirth, age.getYears() );
       System.out.format( "%-17s %.2f\n", "Length:", length );
-      System.out.format( "%-17s %.2f (bmi=%.1f)\n", "Weight:", weight, calcBMI() );
+      System.out.format( "%-17s %.2f (bmi=%.1f)\n", "Weight:", getWeight(), calcBMI() );
+      System.out.format( "%-17s %d measurements\n", "Weight stats:", weights.size() );
       System.out.format( "%-17s %d medicins\n", "Medication:", medicins.size() );
       medicins.writeShort();
       System.out.println( "===================================" );
@@ -264,6 +273,30 @@ public class Patient
    // Write oneline info of patient to screen
    void writeOneliner()
    {
-      System.out.format( "%10s %-20s [%s]\n", firstName, surName, dateOfBirth.toString() );
+      System.out.format( "%10s %-20s [%s]", firstName, surName, dateOfBirth.toString() );
+
+      // Clumsy way to indicate if there medicins and more than one weight measurement
+      if (medicins.size()>0 || weights.size()>1)
+      {
+         System.out.format( " [");
+
+         boolean hasWeights = (weights.size() > 1);
+         if (medicins.size() > 0)
+         {
+            System.out.format( "medicins" );
+            if (hasWeights)
+            {
+               System.out.format( "," );
+            }
+         }
+         if (hasWeights)
+         {
+            System.out.format( "weights" );
+         }
+
+         System.out.format( "]" );
+      }
+
+      System.out.println();
    }
 }
