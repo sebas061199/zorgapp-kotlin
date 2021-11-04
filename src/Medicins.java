@@ -1,8 +1,17 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 class Medicins
 {
-   private ArrayList<Medicin> medicins = new ArrayList<Medicin>( 0 );
+   private final ArrayList<Medicin> medicins = new ArrayList<Medicin>( 0 );
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +31,85 @@ class Medicins
          medicins.add( new Medicin( "acebutolol", "betablokker", "blokkeert alle betas", "1xperdag" ) );
       }
    }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////
+   public Medicins( JSONObject object )
+   {
+      JSONArray a = object.getJSONArray( "medicins" );
+      for (int i = 0; i < a.length(); i++)
+      {
+         Medicin w = new Medicin( (JSONObject) a.get( i ) );
+         medicins.add( w );
+      }
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////
+   JSONObject toJSON()
+   {
+      JSONObject obj = new JSONObject();
+
+      JSONArray ja = new JSONArray();
+      for (Medicin m : medicins)
+      {
+         ja.put( m.toJSON() );
+      }
+      obj.put( "medicins", ja );
+
+      return obj;
+   }
+
+
+   ////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////
+   void save( String filename )
+   {
+      try
+      {
+         PrintWriter writer = new PrintWriter( filename, StandardCharsets.UTF_8 );
+
+         String s = toJSON().toString();
+         writer.println( s );
+
+         writer.flush();
+         writer.close();
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   /// Load from disk. Data must have been saved by the save routine in this class.
+   ////////////////////////////////////////////////////////////////////////////////
+   public void load( File file )
+   {
+      try
+      {
+         InputStream is      = new FileInputStream( file );
+         JSONTokener tokener = new JSONTokener( is );
+         JSONObject  object  = new JSONObject( tokener );
+
+         medicins.clear();
+         JSONArray meds = object.getJSONArray( "medicins" );
+         for (int i = 0; i < meds.length(); i++)
+         {
+            Medicin m = new Medicin( (JSONObject) meds.get( i ) );
+            medicins.add( m );
+         }
+      }
+      catch (org.json.JSONException e)
+      {
+         System.out.println( "json error: que?" );
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+   }
+
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////

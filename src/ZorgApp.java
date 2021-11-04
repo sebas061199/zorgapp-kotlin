@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 import static java.lang.System.exit;
 
 public class ZorgApp
@@ -25,5 +27,10 @@ public class ZorgApp
 
       Admin admin = new Admin( userID );
       admin.menu();
+
+      System.out.format( "saving data...\n" );
+      admin.save();
+
+      System.out.println( "ZorgApp ends at " + LocalDateTime.now() );
    }
 }
