@@ -1,7 +1,5 @@
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class Patient
 {
@@ -103,10 +101,8 @@ public class Patient
    // Handle editing of patient data
    void editMenu( boolean zv )
    {
-      Scanner scanner1 = new Scanner( System.in ); // use for integers.
-      scanner1.useLocale( Locale.US );
-      Scanner scanner2 = new Scanner( System.in ); // use for strings
-      scanner2.useLocale( Locale.US );
+      var scanner1 = new BScanner(); // use for integers.
+      var scanner2 = new BScanner(); // use for strings
 
       boolean nextCycle = true;
       while (nextCycle)
@@ -115,7 +111,7 @@ public class Patient
          printEditMenuOptions( zv );
          System.out.println( "Enter digit (0=return)" );
 
-         int choice = scanner1.nextInt();
+         int choice = scanner1.scanInt();
          switch (choice)
          {
             case RETURN:
@@ -126,7 +122,7 @@ public class Patient
                if (zv)
                {
                   System.out.format( "Enter new surname: (was: %s)\n", surName );
-                  surName = scanner2.nextLine();
+                  surName = scanner2.scanString();
                   break;
                }
 
@@ -134,20 +130,20 @@ public class Patient
                if (zv)
                {
                   System.out.format( "Enter new first name: (was: %s)\n", firstName );
-                  firstName = scanner2.nextLine();
+                  firstName = scanner2.scanString();
                   break;
                }
 
             case NICKNAME:
                System.out.format( "Enter new nickname: (was: %s)\n", nickName );
-               nickName = scanner2.nextLine();
+               nickName = scanner2.scanString();
                break;
 
             case DATEOFBIRTH:
                if (zv)
                {
                   System.out.format( "Enter new date of birth (yyyy-MM-dd; was: %s)\n", dateOfBirth );
-                  String sdate = scanner2.nextLine();
+                  String sdate = scanner2.scanString();
                   dateOfBirth = LocalDate.parse( sdate );
                   break;
                }
@@ -156,7 +152,7 @@ public class Patient
                if (zv)
                {
                   System.out.format( "Enter new length (in m; was: %.2f)", length );
-                  double l = scanner1.nextDouble();
+                  double l = scanner1.scanDouble();
                   setLength( l );
                   break;
                }
@@ -165,7 +161,7 @@ public class Patient
                if (zv)
                {
                   System.out.format( "Enter new weight (in kg; was: %.1f)\n", weight );
-                  double m = scanner1.nextDouble();
+                  double m = scanner1.scanDouble();
                   setWeight( m );
                   break;
                }
