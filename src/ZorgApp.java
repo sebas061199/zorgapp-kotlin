@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.time.LocalDateTime;
 
 import static java.lang.System.exit;
 
@@ -6,7 +6,7 @@ public class ZorgApp
 {
    public static void main( String[] args )
    {
-      System.out.println( "ZorgApp2021-" + "sprint2" );
+      System.out.println( "ZorgApp2021-" + "sprint2x" );
 
       if (args.length != 1)
       {
@@ -15,8 +15,8 @@ public class ZorgApp
       }
       assert (args.length == 1);// When ere we know that args[] has only one element.
 
-      Scanner input  = new Scanner( args[0] );
-      int     userID = input.nextInt(); // patientnr. 0=zorgverlener.
+      var input  = new BScanner( args[0] );
+      int userID = input.scanInt(); // patientnr. 0=zorgverlener.
       System.out.println( "userID: " + userID );
 
       if (userID < 0)
@@ -27,5 +27,10 @@ public class ZorgApp
 
       Admin admin = new Admin( userID );
       admin.menu();
+
+      System.out.format( "saving data...\n" );
+      admin.save();
+
+      System.out.println( "ZorgApp ends at " + LocalDateTime.now() );
    }
 }
