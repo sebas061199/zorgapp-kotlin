@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 
 
@@ -31,16 +32,52 @@ public class Patients
       p.addMedicin( medicins.getMedicin( 5 ) );
       p.addMedicin( medicins.getMedicin( 7 ) );
       p.addMedicin( medicins.getMedicin( 9 ) );
+      p.addWeightMeasurement( 75.0, LocalDate.of( 2000, Month.APRIL, 1 ) );
+      p.addWeightMeasurement( 75.3, LocalDate.of( 2000, Month.APRIL, 27 ) );
+      p.addWeightMeasurement( 75.9, LocalDate.of( 2000, Month.MAY, 7 ) );
+      p.addWeightMeasurement( 76.3, LocalDate.of( 2000, Month.MAY, 27 ) );
+      p.addWeightMeasurement( 77.3, LocalDate.of( 2000, Month.JUNE, 14 ) );
+      p.addWeightMeasurement( 76.3, LocalDate.of( 2000, Month.JUNE, 27 ) );
+      p.addWeightMeasurement( 75.3, LocalDate.of( 2000, Month.AUGUST, 27 ) );
+      p.addWeightMeasurement( 73.3, LocalDate.of( 2000, Month.NOVEMBER, 27 ) );
       patients.add( p );
 
       patients.add( new Patient( freeId(), "Bruggen", "Karin", LocalDate.of( 1970, 1, 1 ), 64.2, 1.68 ) );
-      patients.add( new Patient( freeId(), "Klinkhamer", "Hielke", LocalDate.of( 1980, 12, 31 ), 74.2, 1.77 ) );
-      patients.add( new Patient( freeId(), "Klinkhamer", "Sietse", LocalDate.of( 1980, 12, 31 ), 74.5, 1.78 ) );
+
+      p = new Patient( freeId(), "Klinkhamer", "Hielke", LocalDate.of( 1980, 12, 31 ), 74.2, 1.77 );
+      p.addWeightMeasurement( 60.0, LocalDate.of( 2004, Month.FEBRUARY, 29 ) );
+      p.addWeightMeasurement( 61.0, LocalDate.of( 2005, Month.FEBRUARY, 28 ) );
+      p.addWeightMeasurement( 62.0, LocalDate.of( 2006, Month.FEBRUARY, 28 ) );
+      p.addWeightMeasurement( 63.0, LocalDate.of( 2007, Month.FEBRUARY, 28 ) );
+      p.addWeightMeasurement( 64.0, LocalDate.of( 2008, Month.FEBRUARY, 29 ) );
+      p.addWeightMeasurement( 63.0, LocalDate.of( 2009, Month.FEBRUARY, 28 ) );
+      p.addWeightMeasurement( 62.0, LocalDate.of( 2010, Month.FEBRUARY, 28 ) );
+      p.addWeightMeasurement( 61.0, LocalDate.of( 2011, Month.FEBRUARY, 28 ) );
+      p.addWeightMeasurement( 62.0, LocalDate.of( 2012, Month.FEBRUARY, 29 ) );
+      p.addWeightMeasurement( 63.0, LocalDate.of( 2013, Month.FEBRUARY, 28 ) );
+      p.addWeightMeasurement( 64.0, LocalDate.of( 2013, Month.FEBRUARY, 28 ) );
+      patients.add( p );
+
+      p = new Patient( freeId(), "Klinkhamer", "Sietse", LocalDate.of( 1980, 12, 31 ), 74.5, 1.78 );
+      p.addMedicin( medicins.getMedicin( 2 ) );  // TODO: no hardcoded encoding of medicins:
+      p.addMedicin( medicins.getMedicin( 4 ) );
+      p.addMedicin( medicins.getMedicin( 6 ) );
+      p.addMedicin( medicins.getMedicin( 8 ) );
+      patients.add( p );
+
       patients.add( new Patient( freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 68.2, 1.65 ) );
 
       p = new Patient( freeId(), "de Lange", "Kortjakje", LocalDate.of( 2012, 7, 1 ), 68.2, 1.65 );
       p.addMedicin( medicins.getMedicin( 2 ), "onbekend" );
       p.addMedicin( medicins.getMedicin( 3 ), "1/dag" );
+      p.addWeightMeasurement( 45.0, LocalDate.of( 2000, Month.APRIL, 1 ) );
+      p.addWeightMeasurement( 45.3, LocalDate.of( 2000, Month.APRIL, 27 ) );
+      p.addWeightMeasurement( 45.9, LocalDate.of( 2000, Month.MAY, 7 ) );
+      p.addWeightMeasurement( 46.3, LocalDate.of( 2000, Month.MAY, 27 ) );
+      p.addWeightMeasurement( 47.3, LocalDate.of( 2000, Month.JUNE, 14 ) );
+      p.addWeightMeasurement( 46.3, LocalDate.of( 2000, Month.JUNE, 27 ) );
+      p.addWeightMeasurement( 45.3, LocalDate.of( 2000, Month.AUGUST, 27 ) );
+      p.addWeightMeasurement( 53.3, LocalDate.of( 2001, Month.JANUARY, 27 ) );
       patients.add( p );
 
       patients.add( new Patient( freeId(), "Stroorum", "Karin", LocalDate.of( 2012, 12, 12 ), 44.2, 1.50 ) );

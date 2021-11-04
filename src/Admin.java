@@ -58,6 +58,7 @@ public class Admin
       final int SELECT = 1;
       final int PRINT  = 2;
       final int EDIT   = 3;
+      final int PLOTW  = 4;
 
       var scanner = new BScanner();
 
@@ -66,10 +67,14 @@ public class Admin
       {
          if (zv)
          {
+            System.out.format( "%s\n", "=".repeat( 80 ) );
             System.out.format( "Current patient: " );
             patient.writeOneliner();
          }
 
+         ////////////////////////
+         // Print menu on screen
+         ////////////////////////
          System.out.format( "%d:  STOP\n", STOP );
          if (zv)
          {
@@ -77,6 +82,8 @@ public class Admin
          }
          System.out.format( "%d:  Print patient data\n", PRINT );
          System.out.format( "%d:  Edit  patient data\n", EDIT );
+         System.out.format( "%d:  Plot  patient weights\n", PLOTW );
+         ////////////////////////
 
          System.out.println( "enter digit:" );
          choice = scanner.scanInt();
@@ -98,6 +105,10 @@ public class Admin
 
             case EDIT:
                patient.editMenu( zv );
+               break;
+
+            case PLOTW:
+               patient.plotWeights();
                break;
 
             default:
