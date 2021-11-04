@@ -67,7 +67,7 @@ public class Patient
 
    public double calcBMI()
    {
-      return weight/(length*length);
+      return length > 0.0 ? weight/(length*length) : -1.0;
    }
 
    // Access surName
