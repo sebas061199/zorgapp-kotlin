@@ -1,20 +1,11 @@
+import org.json.JSONObject;
+
 class Medicin
 {
    private final String name;
    private final String desc;
    private final String type;
    private       String dose;
-
-   ////////////////////////////////////////////////////////////////////////////////
-   /// ctor
-   ////////////////////////////////////////////////////////////////////////////////
-   Medicin( String name, String type, String description, String dose )
-   {
-      this.name = name;
-      this.desc = description;
-      this.type = type;
-      this.dose = dose;
-   }
 
    ////////////////////////////////////////////////////////////////////////////////
    /// Copy ctor
@@ -36,6 +27,43 @@ class Medicin
       desc      = m.desc;
       type      = m.type;
       this.dose = dose;
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   /// ctor
+   ////////////////////////////////////////////////////////////////////////////////
+   Medicin( String name, String type, String description, String dose )
+   {
+      this.name = name;
+      this.desc = description;
+      this.type = type;
+      this.dose = dose;
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   /// CTOR: construct from JSONObject
+   ////////////////////////////////////////////////////////////////////////////////
+   public Medicin( JSONObject obj )
+   {
+      name = obj.getString( "name" );
+      desc = obj.getString( "desc" );
+      type = obj.getString( "type" );
+      dose = obj.getString( "dose" );
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   /// Serialise
+   ////////////////////////////////////////////////////////////////////////////////
+   public JSONObject toJSON()
+   {
+      JSONObject jobj = new JSONObject();
+
+      jobj.put( "name", name );
+      jobj.put( "desc", desc );
+      jobj.put( "type", type );
+      jobj.put( "dose", dose );
+
+      return jobj;
    }
 
    public String name()

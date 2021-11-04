@@ -1,5 +1,8 @@
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class Patient
 {
@@ -41,6 +44,48 @@ public class Patient
       this( id, surName, firstName, dateOfBirth );
       this.weight = weight;
       this.length = length;
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   /// Construct an object from its JSONObject form.
+   /// @note tagnames in this constructor must match those used in routine toJson()!
+   ////////////////////////////////////////////////////////////////////////////////
+   public Patient( JSONObject obj )
+   {
+      id        = obj.getInt( "id" );
+      firstName = obj.getString( "firstName" );
+      surName   = obj.getString( "surName" );
+
+      // Read date first as string, then convert to LocalDate.
+      String            date      = obj.getString( "dateOfBirth" );
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
+      dateOfBirth = LocalDate.parse( date, formatter );
+
+      weight = obj.getDouble( "weight" );
+      length = obj.getDouble( "length" );
+
+      // The field _mymedicins is written as a JSONObject. (@see toJSON)
+      JSONObject obj2 = obj.getJSONObject( "medicins" );
+      medicins = new Medicins( obj2 );
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   /// Serialize an object to a JSONObject.
+   ////////////////////////////////////////////////////////////////////////////////
+   public JSONObject toJSON()
+   {
+      JSONObject obj = new JSONObject();
+
+      obj.put( "id", id );
+      obj.put( "firstName", firstName );
+      obj.put( "surName", surName );
+      obj.put( "dateOfBirth", dateOfBirth );
+      obj.put( "weight", weight );
+      obj.put( "length", length );
+
+      obj.put( "medicins", medicins.toJSON() );
+
+      return obj;
    }
 
    public double getLength()

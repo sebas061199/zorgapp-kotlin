@@ -1,43 +1,41 @@
-import java.time.LocalDate;
+import java.io.File;
 
 public class Admin
 {
-   Patients patients = new Patients(); // The list of all patients
-   Patient  patient;                   // The currently selected patient
-   Medicins medicins = new Medicins( true );
-   boolean  zv;                        // true when 'zorgverlener'; false otherwise
+   static final String fname_medicins = "medicins.json";
+   static final String fname_patients = "patients.json";
+
+   Patients patients; // The list of all patients
+   Patient  patient;  // The currently selected patient
+   Medicins medicins; // The list of all medicins
+   boolean  zv;       // true when 'zorgverlener'; false otherwise
 
    // Constructor
    Admin( int userID )
    {
-      zv = (userID == 0);
-
-      // Create patient profiles
+      // Initialise both list of medicins and list of patients.
       {
-         var p = new Patient( patients.freeId(), "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) );
-         p.addMedicin( medicins.getMedicin( 1 ) );
-         p.addMedicin( medicins.getMedicin( 3 ) );
-         p.addMedicin( medicins.getMedicin( 5 ) );
-         p.addMedicin( medicins.getMedicin( 7 ) );
-         p.addMedicin( medicins.getMedicin( 9 ) );
-         patients.addPatient( p );
-      }
-      patients.addPatient( new Patient( patients.freeId(), "Bruggen", "Karin", LocalDate.of( 1970, 1, 1 ), 64.2, 1.68 ) );
-      patients.addPatient( new Patient( patients.freeId(), "Klinkhamer", "Hielke", LocalDate.of( 1980, 12, 31 ), 74.2, 1.77 ) );
-      patients.addPatient( new Patient( patients.freeId(), "Klinkhamer", "Sietse", LocalDate.of( 1980, 12, 31 ), 74.5, 1.78 ) );
-      patients.addPatient( new Patient( patients.freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 68.2, 1.65 ) );
+         File fmeds = new File( fname_medicins );
+         File fprof = new File( fname_patients );
 
-      {
-         var p = new Patient( patients.freeId(), "de Lange", "Kortjakje", LocalDate.of( 2012, 7, 1 ), 68.2, 1.65 );
-         p.addMedicin( medicins.getMedicin( 2 ), "onbekend" );
-         p.addMedicin( medicins.getMedicin( 3 ), "1/dag" );
-         patients.addPatient( p );
+         // If both files exist, use them to load data. Otherwise, go for the hardcoded option.
+         if (fmeds.isFile() && fprof.isFile())
+         {
+            System.out.format( "Both %s and %s exist: loading data from these files!\n", fname_medicins, fname_patients );
+            medicins = new Medicins( false );
+            medicins.load( fmeds ); // todo: robustness for file access etc.
+            patients = new Patients();
+            patients.load( fprof ); // todo: robustness for file access etc.
+         }
+         else
+         {
+            System.out.format( "Hard-coded profiles and medicins!\n" );
+            medicins = new Medicins( true );  // The app needs the total list of avaialble medicins...
+            patients = new Patients( medicins ); // .. which is used to initialise the profiles.
+         }
       }
 
-      patients.addPatient( new Patient( patients.freeId(), "Stroorum", "Karin", LocalDate.of( 2012, 12, 12 ), 44.2, 1.50 ) );
-      patients.addPatient( new Patient( patients.freeId(), "Pie", "Willem", LocalDate.of( 1956, 11, 21 ), 80.0, 1.86 ) );
-      patients.addPatient( new Patient( patients.freeId(), "Bakkebaard", "Opa", LocalDate.of( 1900, 01, 01 ), 44.2, 1.50 ) );
-
+      zv      = (userID == 0);
       patient = patients.getPatient( zv ? 1 : userID ); // todo: make robust
    }
 
@@ -108,4 +106,14 @@ public class Admin
          }
       }
    }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   ///
+   ////////////////////////////////////////////////////////////////////////////////
+   public void save()
+   {
+      patients.save( fname_patients );
+      medicins.save( fname_medicins );
+   }
+
 }
