@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 class Medicins
 {
@@ -76,14 +75,14 @@ class Medicins
    public void editMenu()
    {
       final int STOP    = 0;
-      Scanner   scanner = new Scanner( System.in );
+      var       scanner = new BScanner();
 
       while (true)
       {
          writeShort();
          System.out.format( "0=return, negative index will delete, positive will edit\n" );
 
-         int choice = scanner.nextInt();
+         int choice = scanner.scanInt();
          if (choice == STOP)
          {
             break;
@@ -109,8 +108,8 @@ class Medicins
                var medicin = medicins.get( index );
 
                System.out.format( "%s: please enter new dose: (was: %s)\n", medicin.name(), medicin.dose() );
-               Scanner scanner2 = new Scanner( System.in );
-               var     dose     = scanner2.nextLine();
+               var scanner2 = new BScanner();
+               var dose     = scanner2.scanString();
 
                medicin.setDose( dose );
             }

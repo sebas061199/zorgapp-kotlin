@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Admin
 {
@@ -48,9 +47,9 @@ public class Admin
    {
       patients.writeOneliners();
       System.out.println( "enter Patient ID:" );
-      Scanner scanner = new Scanner( System.in );
+      var scanner = new BScanner();
 
-      int id = scanner.nextInt();
+      int id = scanner.scanInt();
       return patients.isValidId( id ) ? patients.getPatient( id ) : patient;
    }
 
@@ -62,7 +61,7 @@ public class Admin
       final int PRINT  = 2;
       final int EDIT   = 3;
 
-      Scanner scanner = new Scanner( System.in );
+      var scanner = new BScanner();
 
       int choice = 1;
       while (choice != 0)
@@ -82,7 +81,7 @@ public class Admin
          System.out.format( "%d:  Edit  patient data\n", EDIT );
 
          System.out.println( "enter digit:" );
-         choice = scanner.nextInt();
+         choice = scanner.scanInt();
          switch (choice)
          {
             case STOP: // do nothing

@@ -1,11 +1,9 @@
-import java.util.Scanner;
-
 class Medicin
 {
-   private String name;
-   private String desc;
-   private String type;
-   private String dose;
+   private final String name;
+   private final String desc;
+   private final String type;
+   private       String dose;
 
    ////////////////////////////////////////////////////////////////////////////////
    /// ctor
@@ -13,7 +11,7 @@ class Medicin
    Medicin( String name, String type, String description, String dose )
    {
       this.name = name;
-      desc      = description;
+      this.desc = description;
       this.type = type;
       this.dose = dose;
    }
@@ -92,8 +90,8 @@ class Medicin
       System.out.format( "edit medicin (dose only): " ); //writeShort();
       System.out.format( "please enter a new dose\n" );
 
-      Scanner input = new Scanner( System.in );
-      String  dose  = input.nextLine().trim();
+      var    input = new BScanner();
+      String dose  = input.scanString().trim();
 
       // Create updated Medicin, or leave untouched in case of an empty string.
       Medicin m = !dose.isEmpty() ? new Medicin( this, dose ) : this;
