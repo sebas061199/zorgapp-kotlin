@@ -27,11 +27,11 @@ public class Patients
    public Patients( Medicins medicins )
    {
       var p = new Patient( freeId(), "Van Puffelen", "Adriaan", LocalDate.of( 2000, 02, 29 ) );
-      p.addMedicin( medicins.getMedicin( 1 ) );  // TODO: no hardcoded encoding of medicins:
-      p.addMedicin( medicins.getMedicin( 3 ) );
-      p.addMedicin( medicins.getMedicin( 5 ) );
-      p.addMedicin( medicins.getMedicin( 7 ) );
-      p.addMedicin( medicins.getMedicin( 9 ) );
+      p.addMedicin( MedNum.ACEBUTOLOL, medicins.getMedicin( MedNum.ACEBUTOLOL ) );
+      p.addMedicin( MedNum.ASPERINE, medicins.getMedicin( MedNum.ASPERINE ) );
+      p.addMedicin( MedNum.PARACETAMOL, medicins.getMedicin( MedNum.PARACETAMOL ) );
+      p.addMedicin( MedNum.CYAANKALI, medicins.getMedicin( MedNum.CYAANKALI ) );
+      p.addMedicin( MedNum.MOGADON, medicins.getMedicin( MedNum.MOGADON ) );
       p.addWeightMeasurement( 75.0, LocalDate.of( 2000, Month.APRIL, 1 ) );
       p.addWeightMeasurement( 75.3, LocalDate.of( 2000, Month.APRIL, 27 ) );
       p.addWeightMeasurement( 75.9, LocalDate.of( 2000, Month.MAY, 7 ) );
@@ -62,10 +62,10 @@ public class Patients
 
       p = new Patient( freeId(), "Klinkhamer", "Sietse", LocalDate.of( 1980, 12, 31 ), 1.78 );
       p.addWeightMeasurement( 63.0, LocalDate.now() );
-      p.addMedicin( medicins.getMedicin( 2 ) );  // TODO: no hardcoded encoding of medicins:
-      p.addMedicin( medicins.getMedicin( 4 ) );
-      p.addMedicin( medicins.getMedicin( 6 ) );
-      p.addMedicin( medicins.getMedicin( 8 ) );
+      p.addMedicin( MedNum.ASPERINE, medicins.getMedicin( MedNum.ASPERINE ) );
+      p.addMedicin( MedNum.ADEFOVIR, medicins.getMedicin( MedNum.ADEFOVIR ) );
+      p.addMedicin( MedNum.MOGADON, medicins.getMedicin( MedNum.MOGADON ) );
+      p.addMedicin( MedNum.CYAANKALI, medicins.getMedicin( MedNum.CYAANKALI ) );
       patients.add( p );
 
       p = new Patient( freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 1.65 );
@@ -73,8 +73,8 @@ public class Patients
       patients.add( p );
 
       p = new Patient( freeId(), "de Lange", "Kortjakje", LocalDate.of( 2012, 7, 1 ), 1.65 );
-      p.addMedicin( medicins.getMedicin( 2 ), "onbekend" );
-      p.addMedicin( medicins.getMedicin( 3 ), "1/dag" );
+      p.addMedicin( MedNum.JANUMET, medicins.getMedicin( MedNum.JANUMET ), "onbekend" );
+      p.addMedicin( MedNum.METFORMINE, medicins.getMedicin( MedNum.METFORMINE ), "1/dag" );
       p.addWeightMeasurement( 45.0, LocalDate.of( 2000, Month.APRIL, 1 ) );
       p.addWeightMeasurement( 45.3, LocalDate.of( 2000, Month.APRIL, 27 ) );
       p.addWeightMeasurement( 45.9, LocalDate.of( 2000, Month.MAY, 7 ) );

@@ -7,11 +7,11 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 class Medicins
 {
-   private final ArrayList<Medicin> medicins = new ArrayList<Medicin>( 0 );
+   private final HashMap<MedNum, Medicin> medicins = new HashMap<>();
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
@@ -19,16 +19,16 @@ class Medicins
    {
       if (init)
       {
-         medicins.add( new Medicin( "Paracetamol", "Pijnstiller", "", "3xdaags" ) );
-         medicins.add( new Medicin( "Asperine", "Pijnstiller", "", "max 3xdaags" ) );
-         medicins.add( new Medicin( "Metformine", "bloeddrukremmer", "Verlaagt bloedglucose", "1/week" ) );
-         medicins.add( new Medicin( "Janumet", "bloeddrukremmer", "Verlaagt bloedglucose", "1 x daags" ) );
-         medicins.add( new Medicin( "Cyaankali", "Pijnstiller", "effectieve oplosmiddel", "1x is genoeg" ) );
-         medicins.add( new Medicin( "Adefovir", "Koortsremmer", "", "4 per week" ) );
-         medicins.add( new Medicin( "Tenofovir alafenamide", "virusremmer", "HIV/HepatitusB virusremmer", "0" ) );
-         medicins.add( new Medicin( "Mogadon", "slaapmiddel", "", "max. 1x etmaal" ) );
-         medicins.add( new Medicin( "Notrazepam", "kalmeringsmiddel", "-", "1x per etmaal" ) );
-         medicins.add( new Medicin( "acebutolol", "betablokker", "blokkeert alle betas", "1xperdag" ) );
+         medicins.put( MedNum.PARACETAMOL, new Medicin( "Paracetamol", "Pijnstiller", "", "3xdaags" ) );
+         medicins.put( MedNum.ASPERINE, new Medicin( "Asperine", "Pijnstiller", "", "max 3xdaags" ) );
+         medicins.put( MedNum.METFORMINE, new Medicin( "Metformine", "bloeddrukremmer", "Verlaagt bloedglucose", "1/week" ) );
+         medicins.put( MedNum.JANUMET, new Medicin( "Janumet", "bloeddrukremmer", "Verlaagt bloedglucose", "1 x daags" ) );
+         medicins.put( MedNum.CYAANKALI, new Medicin( "Cyaankali", "Pijnstiller", "effectieve oplosmiddel", "1x is genoeg" ) );
+         medicins.put( MedNum.ADEFOVIR, new Medicin( "Adefovir", "Koortsremmer", "", "4 per week" ) );
+         medicins.put( MedNum.TENOFOVIR, new Medicin( "Tenofovir alafenamide", "virusremmer", "HIV/HepatitusB virusremmer", "0" ) );
+         medicins.put( MedNum.MOGADON, new Medicin( "Mogadon", "slaapmiddel", "", "max. 1x etmaal" ) );
+         medicins.put( MedNum.NOTRAZEPAM, new Medicin( "Notrazepam", "kalmeringsmiddel", "-", "1x per etmaal" ) );
+         medicins.put( MedNum.ACEBUTOLOL, new Medicin( "acebutolol", "betablokker", "blokkeert alle betas", "1xperdag" ) );
       }
    }
 
@@ -36,11 +36,13 @@ class Medicins
    ////////////////////////////////////////////////////////////////////////////////
    public Medicins( JSONObject object )
    {
-      JSONArray a = object.getJSONArray( "medicins" );
-      for (int i = 0; i < a.length(); i++)
+      JSONArray keys = object.getJSONArray( "medenums" );
+      JSONArray vals = object.getJSONArray( "medicins" );
+      for (int i = 0; i < vals.length(); i++)
       {
-         Medicin w = new Medicin( (JSONObject) a.get( i ) );
-         medicins.add( w );
+         Medicin m = new Medicin( (JSONObject) vals.get( i ) );
+         int     k = keys.getInt( i );
+         medicins.put( MedNum.values()[k], m );
       }
    }
 
@@ -50,16 +52,18 @@ class Medicins
    {
       JSONObject obj = new JSONObject();
 
-      JSONArray ja = new JSONArray();
-      for (Medicin m : medicins)
+      JSONArray keys = new JSONArray();
+      JSONArray vals = new JSONArray();
+      for (var m : medicins.entrySet())
       {
-         ja.put( m.toJSON() );
+         keys.put( m.getKey().ordinal() );
+         vals.put( m.getValue().toJSON() );
       }
-      obj.put( "medicins", ja );
+      obj.put( "medenums", keys );
+      obj.put( "medicins", vals );
 
       return obj;
    }
-
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
@@ -93,11 +97,15 @@ class Medicins
          JSONObject  object  = new JSONObject( tokener );
 
          medicins.clear();
-         JSONArray meds = object.getJSONArray( "medicins" );
-         for (int i = 0; i < meds.length(); i++)
+
+         // Read the medicin list
+         JSONArray keys = object.getJSONArray( "medenums" );
+         JSONArray vals = object.getJSONArray( "medicins" );
+         for (int i = 0; i < vals.length(); i++)
          {
-            Medicin m = new Medicin( (JSONObject) meds.get( i ) );
-            medicins.add( m );
+            Medicin m = new Medicin( (JSONObject) vals.get( i ) );
+            int     k = keys.getInt( i );
+            medicins.put( MedNum.values()[k], m );
          }
       }
       catch (org.json.JSONException e)
@@ -119,31 +127,18 @@ class Medicins
    }
 
    ////////////////////////////////////////////////////////////////////////////////
-   ////////////////////////////////////////////////////////////////////////////////
-   private boolean isValidIndex( int index )
-   {
-      return index >= 0 && index < size();
-   }
-
-   ////////////////////////////////////////////////////////////////////////////////
    /// Add a new medicin to the list (overloaded)
    /// No test for uniqueness is being done.
    ////////////////////////////////////////////////////////////////////////////////
-   public void addMedicin( Medicin m )
+   public void addMedicin( MedNum id, Medicin m )
    {
-      medicins.add( m );
+      medicins.put( id, m );
    }
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
-   public Medicin getMedicin( int index )
+   public Medicin getMedicin( MedNum index )
    {
-      if (!isValidIndex( index ))
-      {
-         System.out.format( "ERROR: medicin id must be one of 0..%d\n", medicins.size() - 1 );
-         return null;
-      }
-
       return medicins.get( index );
    }
 
@@ -151,10 +146,10 @@ class Medicins
    ////////////////////////////////////////////////////////////////////////////////
    public void writeShort()
    {
-      for (int i = 0; i < medicins.size(); i++)
+      for (var e : medicins.entrySet())
       {
-         System.out.format( "%3d. ", i + 1 );
-         medicins.get( i ).writeShort();
+         System.out.format( "%3d. ", e.getKey().ival );
+         e.getValue().writeShort();
       }
    }
 
@@ -178,10 +173,10 @@ class Medicins
 
          if (choice < 0)
          {
-            int index = -choice - 1;
-            if (isValidIndex( index ))
+            var id = MedNum.int2val.get( -choice );
+            if (medicins.containsKey( id ))
             {
-               medicins.remove( index );
+               medicins.remove( id );
             }
             else
             {
@@ -190,10 +185,11 @@ class Medicins
          }
          else
          {
-            int index = choice - 1;
-            if (isValidIndex( index ))
+            var id = MedNum.int2val.get( choice );
+
+            if (medicins.containsKey( id ))
             {
-               var medicin = medicins.get( index );
+               var medicin = medicins.get( id );
 
                System.out.format( "%s: please enter new dose: (was: %s)\n", medicin.name(), medicin.dose() );
                var scanner2 = new BScanner();
