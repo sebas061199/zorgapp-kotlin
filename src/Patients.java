@@ -22,7 +22,7 @@ public class Patients
    }
 
    //////////////////////////////////////////////////////////////////////////////////////////
-   // Ad hoc contructor: when given a medicin list, create hard-coded list of patients.
+   // Ad hoc constructor: when given a medicin list, create hard-coded list of patients.
    //////////////////////////////////////////////////////////////////////////////////////////
    public Patients( Medicins medicins )
    {
@@ -68,7 +68,7 @@ public class Patients
       p.addMedicin( medicins.getMedicin( 8 ) );
       patients.add( p );
 
-      p =new Patient( freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 1.65 );
+      p = new Patient( freeId(), "Kaak", "Maria", LocalDate.of( 2000, 6, 25 ), 1.65 );
       p.addWeightMeasurement( 68.2, LocalDate.now() );
       patients.add( p );
 
@@ -86,11 +86,11 @@ public class Patients
       p.addWeightMeasurement( 68.2, LocalDate.now() );
       patients.add( p );
 
-      p=new Patient( freeId(), "Stroorum", "Karin", LocalDate.of( 2012, 12, 12 ), 1.50 );
+      p = new Patient( freeId(), "Stroorum", "Karin", LocalDate.of( 2012, 12, 12 ), 1.50 );
       p.addWeightMeasurement( 44.2, LocalDate.now() );
       patients.add( p );
 
-      p=new Patient( freeId(), "Pie", "Willem", LocalDate.of( 1956, 11, 21 ), 1.86);
+      p = new Patient( freeId(), "Pie", "Willem", LocalDate.of( 1956, 11, 21 ), 1.86 );
       p.addWeightMeasurement( 80.0, LocalDate.now() );
       patients.add( p );
 
