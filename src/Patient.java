@@ -196,8 +196,7 @@ public class Patient
                if (zv)
                {
                   System.out.format( "Enter new date of birth (yyyy-MM-dd; was: %s)\n", dateOfBirth );
-                  String sdate = scanner2.scanString();
-                  dateOfBirth = LocalDate.parse( sdate );
+                  dateOfBirth = scanner2.scanDate( "yyyy-MM-dd" );
                   break;
                }
 

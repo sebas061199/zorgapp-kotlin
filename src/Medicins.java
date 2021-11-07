@@ -155,6 +155,23 @@ class Medicins
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
+   public int writeComplement( Medicins reflist )
+   {
+      int count = 0;
+      for (var e : reflist.medicins.entrySet())
+      {
+         if (!medicins.containsKey( e.getKey() ))
+         {
+            System.out.format( "%3d. ", e.getKey().ival );
+            e.getValue().writeShort();
+            count++;
+         }
+      }
+      return count;
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////
    public void editMenu()
    {
       final int STOP    = 0;
@@ -163,7 +180,7 @@ class Medicins
       while (true)
       {
          writeShort();
-         System.out.format( "0=return, negative index will delete, positive will edit\n" );
+         System.out.format( "0=return, negative index will delete, positive will edit or add\n" );
 
          int choice = scanner.scanInt();
          if (choice == STOP)
@@ -199,7 +216,27 @@ class Medicins
             }
             else
             {
-               System.out.format( "Invalid entry: %d\n", choice );
+               // When here, a new medicin is to be added. First print which medicins can be selected
+               int n = writeComplement( Admin.medicins );
+               if (n == 0)
+               {
+                  System.out.println( "Cannot add medicin: No medicins left!" );
+               }
+               else
+               {
+                  System.out.println( "To add medicin, please enter its id (from list above)" );
+                  var localscanner = new BScanner();
+                  var k            = localscanner.scanInt();
+                  var m            = MedNum.int2val.get( k );
+                  if (m != null)
+                  {
+                     addMedicin( m, Admin.medicins.getMedicin( m ) );
+                  }
+                  else
+                  {
+                     System.out.format( "Invalid medicin id\n" );
+                  }
+               }
             }
          }
       }
