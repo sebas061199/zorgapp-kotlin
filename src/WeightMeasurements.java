@@ -78,6 +78,6 @@ public class WeightMeasurements
    ////////////////////////////////////////////////////////////////////////////////
    public WeightMeasurement mostRecent()
    {
-      return dateWeights.size()>0 ? dateWeights.get( dateWeights.size()-1 ) : null;
+      return dateWeights.size() > 0 ? dateWeights.get( dateWeights.size() - 1 ) : null;
    }
 }
