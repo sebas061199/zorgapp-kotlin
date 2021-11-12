@@ -57,8 +57,8 @@ public class Admin
       final int STOP   = 0;
       final int SELECT = 1;
       final int PRINT  = 2;
-      final int EDIT   = 3;
-      final int PLOTW  = 4;
+      final int PLOTW  = 3;
+      final int EDIT   = 4;
 
       var scanner = new BScanner();
 
@@ -81,8 +81,8 @@ public class Admin
             System.out.format( "%d:  Select Patient\n", SELECT );
          }
          System.out.format( "%d:  Print patient data\n", PRINT );
-         System.out.format( "%d:  Edit  patient data\n", EDIT );
          System.out.format( "%d:  Plot  patient weights\n", PLOTW );
+         System.out.format( "%d:  Edit  patient data\n", EDIT );
          ////////////////////////
 
          System.out.println( "enter digit:" );

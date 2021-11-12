@@ -102,8 +102,7 @@ public class Patient
 
    public double getWeight()
    {
-      var m = weights.mostRecent();
-      return (m != null) ? m.getWeight() : 0.0;
+      return weights.mostRecent();
    }
 
    public double calcBMI()

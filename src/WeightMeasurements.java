@@ -2,11 +2,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class WeightMeasurements
 {
-   ArrayList<WeightMeasurement> dateWeights = new ArrayList<>();
+   SortedMap<LocalDate, Double> dateWeights = new TreeMap<>();
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
@@ -18,11 +20,14 @@ public class WeightMeasurements
    ////////////////////////////////////////////////////////////////////////////////
    public WeightMeasurements( JSONObject obj )
    {
-      JSONArray a = obj.getJSONArray( "weights" );
-      for (int i = 0; i < a.length(); i++)
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
+
+      JSONArray jd = obj.getJSONArray( "wdates" );
+      JSONArray jw = obj.getJSONArray( "weights" );
+      for (int i = 0; i < jd.length(); i++)
       {
-         var w = new WeightMeasurement( (JSONObject) a.get( i ) );
-         dateWeights.add( w );
+         var date = LocalDate.parse( jd.getString( i ), formatter );
+         dateWeights.put( date, jw.getDouble( i ) );
       }
    }
 
@@ -32,12 +37,16 @@ public class WeightMeasurements
    {
       JSONObject obj = new JSONObject();
 
-      JSONArray ja = new JSONArray();
-      for (var e : dateWeights)
+      JSONArray jd = new JSONArray();
+      JSONArray jw = new JSONArray();
+      for (var e : dateWeights.entrySet())
       {
-         ja.put( e.toJSON() );
+         jd.put( e.getKey() );     // LocalDate
+         jw.put( e.getValue() );   // Double
       }
-      obj.put( "weights", ja );
+
+      obj.put( "wdates", jd );
+      obj.put( "weights", jw );
 
       return obj;
    }
@@ -46,7 +55,7 @@ public class WeightMeasurements
    ////////////////////////////////////////////////////////////////////////////////
    public void addMeasurement( LocalDate date, double weight )
    {
-      dateWeights.add( new WeightMeasurement( date, weight ) );
+      dateWeights.put( date, weight );
    }
 
    ////////////////////////////////////////////////////////////////////////////////
@@ -60,10 +69,10 @@ public class WeightMeasurements
    ////////////////////////////////////////////////////////////////////////////////
    public void plot()
    {
-      for (var dw : dateWeights)
+      for (var dw : dateWeights.entrySet())
       {
-         int n = nweight( dw.getWeight() );
-         System.out.format( "%s: %s (%4.1f)\n", dw.getDate().toString(), "*".repeat( n ), dw.getWeight() );
+         int n = nweight( dw.getValue() );
+         System.out.format( "%s: %s (%4.1f)\n", dw.getKey().toString(), "*".repeat( n ), dw.getValue() );
       }
    }
 
@@ -76,8 +85,8 @@ public class WeightMeasurements
 
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
-   public WeightMeasurement mostRecent()
+   public double mostRecent()
    {
-      return dateWeights.size() > 0 ? dateWeights.get( dateWeights.size() - 1 ) : null;
+      return dateWeights.get( dateWeights.lastKey() );
    }
 }
