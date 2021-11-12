@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
+import static java.time.format.ResolverStyle.STRICT;
 
 ///////////////////////////////////////////////////////////////////////////////////
 // BScanner is a scanner call, wrapping the java.util.Scanner, providing a bit more
@@ -97,30 +98,34 @@ class BScanner
    }
 
    ////////////////////////////////////////////////////////////////////////////////
-   /// Note: not robust when a wrong format is entered.......
+   /// Note: STRICT formatting does not work....?????
+   ///       java.time.format.ResolverStyle.STRICT (see formatter, below)
    ////////////////////////////////////////////////////////////////////////////////
    public LocalDate scanDate( String fmt )
    {
       LocalDate r = null;
+      String sdate = "";
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern( fmt );
+//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern( fmt ).withResolverStyle(STRICT);
       while (true)
       {
          try
          {
-            String s = scanner.nextLine();
-            r = LocalDate.parse( s, formatter );
+            sdate = scanner.nextLine();
+            r = LocalDate.parse( sdate, formatter );
             break;
          }
          catch (Exception e)
          {
-            System.out.println( "please enter a string " + fmt );
-            while (scanner.hasNext())
-            {
-               scanner.next();
-            }
+            System.out.format( "%s is not a valid date; ", sdate );
+            System.out.format( "please enter a valid date %s:\n", fmt );
+//            while (scanner.hasNext())
+//            {
+//               scanner.next();
+//            }
          }
-         scanner.nextLine();
+         //scanner.nextLine();
       }
 
       return r;

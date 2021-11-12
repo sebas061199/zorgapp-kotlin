@@ -130,15 +130,15 @@ public class Patient
    }
 
    // Add a new medicin to the patients medication
-   public void addMedicin( Medicin medicin )
+   public void addMedicin( MedNum id, Medicin medicin )
    {
-      medicins.addMedicin( new Medicin( medicin ) );
+      medicins.addMedicin( id, new Medicin( medicin ) );
    }
 
    // Add a new medicin to the patients medication (new dose)
-   public void addMedicin( Medicin medicin, String mydose )
+   public void addMedicin( MedNum id, Medicin medicin, String mydose )
    {
-      medicins.addMedicin( new Medicin( medicin, mydose ) );
+      medicins.addMedicin( id, new Medicin( medicin, mydose ) );
    }
 
    public void addWeightMeasurement( double weight, LocalDate date )
@@ -196,8 +196,7 @@ public class Patient
                if (zv)
                {
                   System.out.format( "Enter new date of birth (yyyy-MM-dd; was: %s)\n", dateOfBirth );
-                  String sdate = scanner2.scanString();
-                  dateOfBirth = LocalDate.parse( sdate );
+                  dateOfBirth = scanner2.scanDate( "yyyy-MM-dd" );
                   break;
                }
 
@@ -276,9 +275,9 @@ public class Patient
       System.out.format( "%10s %-20s [%s]", firstName, surName, dateOfBirth.toString() );
 
       // Clumsy way to indicate if there medicins and more than one weight measurement
-      if (medicins.size()>0 || weights.size()>1)
+      if (medicins.size() > 0 || weights.size() > 1)
       {
-         System.out.format( " [");
+         System.out.format( " [" );
 
          boolean hasWeights = (weights.size() > 1);
          if (medicins.size() > 0)

@@ -2,12 +2,12 @@ import java.io.File;
 
 public class Admin
 {
-   static final String fname_medicins = "medicins.json";
-   static final String fname_patients = "patients.json";
+   static final String   fname_medicins = "medicins.json";
+   static final String   fname_patients = "patients.json";
+   static Medicins medicins; // The list of all medicins. Made static to have a globally accessible singleton.
 
    Patients patients; // The list of all patients
    Patient  patient;  // The currently selected patient
-   Medicins medicins; // The list of all medicins
    boolean  zv;       // true when 'zorgverlener'; false otherwise
 
    // Constructor
