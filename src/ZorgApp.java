@@ -6,7 +6,7 @@ public class ZorgApp
 {
    public static void main( String[] args )
    {
-      System.out.println( "ZorgApp2021-" + "sprint3x" );
+      System.out.println( "ZorgApp2021-" + "sprint3x.fix1" );
 
       if (args.length != 1)
       {
