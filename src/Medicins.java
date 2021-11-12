@@ -205,7 +205,7 @@ class Medicins
          }
          else
          {
-            var id = MedNum.int2val.get( choice );
+            var id = MedNum.int2val.get( choice ); // note: id can be null.
 
             if (id != null && medicins.containsKey( id ))
             {
