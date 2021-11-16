@@ -33,9 +33,9 @@ public class Patients
       p.addMedicin( MedNum.CYAANKALI, medicins.getMedicin( MedNum.CYAANKALI ) );
       p.addMedicin( MedNum.MOGADON, medicins.getMedicin( MedNum.MOGADON ) );
       p.addWeightMeasurement( 75.0, LocalDate.of( 2000, Month.APRIL, 1 ) );
-      p.addWeightMeasurement( 75.3, LocalDate.of( 2000, Month.APRIL, 27 ) );
+      p.addWeightMeasurement( 75.3, LocalDate.of( 1995, Month.APRIL, 27 ) );
       p.addWeightMeasurement( 75.9, LocalDate.of( 2000, Month.MAY, 7 ) );
-      p.addWeightMeasurement( 76.3, LocalDate.of( 2000, Month.MAY, 27 ) );
+      p.addWeightMeasurement( 76.3, LocalDate.of( 1990, Month.MAY, 27 ) );
       p.addWeightMeasurement( 77.3, LocalDate.of( 2000, Month.JUNE, 14 ) );
       p.addWeightMeasurement( 76.3, LocalDate.of( 2000, Month.JUNE, 27 ) );
       p.addWeightMeasurement( 75.3, LocalDate.of( 2000, Month.AUGUST, 27 ) );

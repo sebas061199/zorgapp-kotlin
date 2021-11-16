@@ -7,15 +7,13 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 class Medicins
 {
-   private final SortedMap<MedNum,Medicin> medicins = new TreeMap<>();
+   private final SortedMap<MedNum, Medicin> medicins = new TreeMap<>();
+
    ////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////
    public Medicins( boolean init )
