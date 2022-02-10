@@ -106,8 +106,8 @@ class BScanner
       LocalDate r = null;
       String sdate = "";
 
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern( fmt );
-//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern( fmt ).withResolverStyle(STRICT);
+//      DateTimeFormatter formatter = DateTimeFormatter.ofPattern( fmt );
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern( fmt ).withResolverStyle(STRICT);
       while (true)
       {
          try
